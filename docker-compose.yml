@@ -16,21 +16,21 @@ services:
         && pdm install
         && pdm run start"
 
-  quote-ui:
-    image: node:18
-    container_name: quote-ui
-    ports:
-      - "3000:3000"
-    depends_on:
-      - verifier-api
-    networks:
-      - zk8s-network
-    volumes:
-      - ./ra-quote-explorer:/usr/src/app
-    working_dir: /usr/src/app
-    command: >
-        bash -c "npm i
-        && npm run dev"
+  # quote-ui:
+  #   image: node:18
+  #   container_name: quote-ui
+  #   ports:
+  #     - "3000:3000"
+  #   depends_on:
+  #     - verifier-api
+  #   networks:
+  #     - zk8s-network
+  #   volumes:
+  #     - ./ra-quote-explorer:/usr/src/app
+  #   working_dir: /usr/src/app
+  #   command: >
+  #       bash -c "npm i
+  #       && npm run dev"
 
   tappd-simulator:
     image: phalanetwork/tappd-simulator
