@@ -1,5 +1,6 @@
 const express = require('express');
 const { TappdClient } = require('@phala/dstack-sdk')
+const cors = require('cors');
 // DSTACK_SIMULATOR_ENDPOINT=http://tappd-simulator:8090
 const endpoint = process.env.DSTACK_SIMULATOR_ENDPOINT || 'http://localhost:8090'
 const client = new TappdClient(endpoint)
@@ -7,6 +8,7 @@ const client = new TappdClient(endpoint)
 const app = express();
 const RECEIVE_PORT = 4000;
 
+app.use(cors());
 app.get('/', async (req, res) => {
     console.log(endpoint)
     const randomNumString = Math.random().toString();

@@ -23,11 +23,17 @@ app = FastAPI(root_path='/api/attestations')
 
 print("I AM STARTING 2")
 
+origins = [
+    "http://localhost",
+    "http://localhost:8080",
+    "https://ra-quote-explorer-eight.vercel.app/"
+]
 
 # Allow all origins (or specify domains like http://localhost:3000 for local dev)
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # Or list specific origins
+    # allow_origins=["*"],  # Or list specific origins
+    allow_origins=origins,  # Or list specific origins
     allow_credentials=True,
     allow_methods=["*"],  # Allow all methods (GET, POST, etc.)
     allow_headers=["*"],  # Allow all headers
