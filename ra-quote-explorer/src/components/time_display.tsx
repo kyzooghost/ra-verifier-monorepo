@@ -74,7 +74,7 @@ export function TimeDisplay({ isoString, className = '' }: TimeDisplayProps) {
       onMouseEnter={() => setShowDetails(true)}
       onMouseLeave={() => setShowDetails(false)}
     >
-      <time dateTime={isoString}>{friendly}</time>
+      <time dateTime={isoString} suppressHydrationWarning>{friendly}</time>
       {showDetails && (
         <span className="absolute left-0 top-full mt-1 px-2 py-1 text-sm bg-gray-800 text-white rounded shadow-lg whitespace-nowrap z-10">
           {detailed}

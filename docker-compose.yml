@@ -20,7 +20,7 @@ services:
     image: node:18
     container_name: quote-ui
     ports:
-      - "3001:3000"
+      - "3000:3000"
     depends_on:
       - verifier-api
     networks:
@@ -46,15 +46,15 @@ services:
     depends_on:
       - tappd-simulator
     ports:
-      - "3000:3000"
+      - "4000:4000"
     networks:
       - zk8s-network
     volumes:
-      - ./phala-template:/usr/src/app
+      - ./toy-api:/usr/src/app
     working_dir: /usr/src/app
     command: >
         bash -c "npm i
-        && npm run dev"
+        && DSTACK_SIMULATOR_ENDPOINT=http://tappd-simulator:8090 node index"
 
 networks:
   zk8s-network:
