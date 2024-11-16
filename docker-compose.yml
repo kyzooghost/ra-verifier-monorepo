@@ -1,0 +1,61 @@
+version: '3.8'
+
+services:
+  verifier-api:
+    image: python:3.13-bookworm
+    container_name: verifier-api
+    ports:
+      - "8000:8000"
+    networks:
+      - zk8s-network
+    volumes:
+      - ./tappd-simulator/dcap-attestation:/usr/src/app
+    working_dir: /usr/src/app
+    command: >
+        bash -c "pip install pdm
+        && pdm install
+        && pdm run start"
+
+  quote-ui:
+    image: node:18
+    container_name: quote-ui
+    ports:
+      - "3001:3000"
+    depends_on:
+      - verifier-api
+    networks:
+      - zk8s-network
+    volumes:
+      - ./ra-quote-explorer:/usr/src/app
+    working_dir: /usr/src/app
+    command: >
+        bash -c "npm i
+        && npm run dev"
+
+  tappd-simulator:
+    image: phalanetwork/tappd-simulator
+    container_name: tappd-simulator
+    ports:
+      - "8090:8090"
+    networks:
+      - zk8s-network
+
+  toy-container:
+    image: node:18
+    container_name: toy-container
+    depends_on:
+      - tappd-simulator
+    ports:
+      - "3000:3000"
+    networks:
+      - zk8s-network
+    volumes:
+      - ./phala-template:/usr/src/app
+    working_dir: /usr/src/app
+    command: >
+        bash -c "npm i
+        && npm run dev"
+
+networks:
+  zk8s-network:
+    driver: bridge
